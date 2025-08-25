@@ -39,14 +39,14 @@ public:
     Player(string n) : name(n), health(100), maxHealth(100), attack(10), 
                     defense(5), level(1), experience(0), potions(3) {}
 
-    void takeDamage(int damage) {
+     static void takeDamage(int damage) {
         int actualDamage = damage - defense;
         if (actualDamage < 0) actualDamage = 0;
         health -= actualDamage;
         if (health < 0) health = 0;
     }
 
-    void usePotion() {
+    static void usePotion() {
         if (potions > 0) {
             health += 30;
             if (health > maxHealth) health = maxHealth;
@@ -57,7 +57,7 @@ public:
         }
     }
 
-    void gainExperience(int exp) {
+    static void gainExperience(int exp) {
         experience += exp;
         cout << "Gained " << exp << " XP!\n";
         if (experience >= neededExperience() && level < MAX_LEVEL) {
@@ -65,7 +65,7 @@ public:
         }
     }
 
-    void levelUp() {
+    static void levelUp() {
         level++;
         maxHealth += 20;
         health = maxHealth;
@@ -81,7 +81,7 @@ public:
 
     bool isAlive() const { return health > 0; }
 
-    void showStats() const {
+    static void showStats() const {
         cout << "\n--- Player Stats ---\n"
             << "HP: " << health << "/" << maxHealth << "\n"
             << "ATK: " << attack << " DEF: " << defense << "\n"
@@ -90,7 +90,7 @@ public:
     }
 };
 
-void clearScreen() {
+static void clearScreen() {
     system("cls || clear");
 }
 
@@ -160,7 +160,7 @@ bool combat(Player& player, Monster& monster) {
     return false;
 }
 
-void gameLoop(Player& player) {
+static void gameLoop(Player& player) {
     srand(time(0));
     
     while (player.isAlive()) {
